@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/GBARecomp/GBARecomp.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/GBARecomp.Tests/GBARecomp.Tests.csproj" />
+  </Folder>
+</Solution>

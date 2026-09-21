@@ -1,0 +1,30 @@
+name: validate
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        type: [Debug, Release]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    name: ${{ matrix.os }} (${{ matrix.type }})
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Build
+        run: dotnet build -c ${{ matrix.type }}
+      - name: Test
+        run: dotnet test -c ${{ matrix.type }} --no-build
